@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha Post Mortem - CRF "La Granja"</title>
+  <style>
+    @page { size: A4 portrait; margin: 1.5cm; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+    }
+    .a4-wrap {
+      max-width: 185mm;
+      min-height: 260mm;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 0;
+      background: #fff;
+      width: 100%;
+    }
+    .header {
+      padding: 13px 0 6px 0;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      letter-spacing: 0.4px;
+    }
+    .main-row {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 4px;
+      width: 100%;
+      gap: 0;
+    }
+    .reg-entrada-box {
+      border: 2px solid #333;
+      width: 165px;
+      min-width: 130px;
+      max-width: 210px;
+      height: 187px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      margin-right: 0;
+      margin-bottom: 0;
+      padding: 7px 7px 7px 7px;
+      background: #fafbfa;
+      font-size: 12px;
+    }
+    .reg-entrada-label {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+    }
+    .reg-entrada-input {
+      border: 2px solid #333;
+      border-radius: 4px;
+      width: 122px;
+      height: 50px;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 2px;
+      background: #f5f5f5;
+      box-sizing: border-box;
+      letter-spacing: 1px;
+      transition: none;
+    }
+    .fecha-label {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 2px;
+      margin-top: 2px;
+      line-height: 1.1;
+    }
+    .fecha-manual {
+      margin-top: 2px;
+      width: 94px;
+      text-align: center;
+      border: none;
+      border-bottom: 1.2px solid #666;
+      background: transparent;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #333;
+      outline: none;
+      padding-bottom: 1px;
+    }
+    .fecha-input {
+      display: none;
+    }
+    .datos-caja {
+      border: 2px solid #333;
+      border-left: none;
+      flex: 1;
+      min-width: 0;
+      min-height: 187px;
+      height: 187px;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      box-sizing: border-box;
+      padding: 0;
+      background: #fafbfa;
+      font-size: 12px;
+    }
+    .datos-tabla {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: 12px;
+    }
+    .datos-tabla tr:not(:last-child) td {
+      border-bottom: 1.1px solid #555;
+    }
+    .datos-tabla td {
+      padding: 1px 6px 1px 8px;
+      vertical-align: middle;
+      background: transparent;
+      font-size: 12px;
+      line-height: 1.05;
+      position: relative;
+    }
+    .datos-label, .apoyo-elec-label-wrap, .extra-label {
+      font-weight: bold !important;
+    }
+    .apoyo-elec-label-wrap input { font-weight: normal; }
+    .extra-label {
+      min-width: 44px;
+      margin-right: 3px;
+      font-size: 12px;
+      white-space: nowrap;
+      margin-left: 0;
+      transform: translateX(-17px);
+      font-weight: bold !important;
+    }
+    .datos-tabla tr.apoyo-elec-row > td,
+    .apoyo-elec-label-wrap {
+      white-space: nowrap;
+    }
+    .apoyo-elec-label-wrap {
+      display: inline-block;
+      width: 100%;
+    }
+    .apoyo-elec-km-ctra-flex {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .apoyo-elec-input {
+      border: none;
+      border-bottom: 1px solid #999;
+      font-size: 12px;
+      background: transparent;
+      width: 120px;
+      max-width: 140px;
+      min-width: 60px;
+      padding-left: 5px;
+      margin-bottom: 0px;
+      color: #222;
+      height: 17px;
+      box-sizing: border-box;
+      flex-grow: 0;
+      margin-right: 18px;
+      margin-left: 0;
+      vertical-align: middle;
+      font-weight: normal;
+    }
+    .extra-input {
+      border: none;
+      border-bottom: 1px solid #999;
+      font-size: 12px;
+      background: transparent;
+      width: 100px;
+      min-width: 70px;
+      margin-bottom: 0px;
+      color: #222;
+      height: 16px;
+      box-sizing: border-box;
+      flex-grow: 0;
+      margin-left: 0;
+      vertical-align: middle;
+      font-weight: normal;
+    }
+
+    /* ---------- POST MORTEM SECTION ---------- */
+    .historia-titulo-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      width: 100%;
+      min-height: 29px;
+      position: relative;
+      justify-content: flex-start;
+    }
+    .historia-titulo-center-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+    .historia-titulo {
+      font-size: 17px;
+      font-weight: bold;
+      letter-spacing: 0.6px;
+      margin: 0 auto;
+      flex: none;
+      text-align: center;
+      width: auto;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .historia-cajas {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .historia-caja-mano {
+      border: 2px solid #222;
+      width: 26px;
+      height: 26px;
+      margin-left: 10px;
+      border-radius: 2px;
+      display: inline-block;
+      vertical-align: middle;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .cuadro-clinica {
+      width: 100%;
+      border: 2px solid #333;
+      border-radius: 2px;
+      margin-bottom: 5px;
+      background: #fafbfa;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 0 8px 0;
+      box-sizing: border-box;
+      min-height: 675px;
+      font-size: 12px;
+    }
+    .cuadro-bloque {
+      width: 100%;
+      padding: 0 18px 0 18px;
+      box-sizing: border-box;
+      border-bottom: 1.5px solid #888;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin-bottom: 0;
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+    .cuadro-bloque:first-child { margin-top: 0; }
+    .cuadro-bloque:last-child { border-bottom: none; margin-bottom: 0; }
+    .cuadro-linea {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 3px;
+      gap: 40px;
+      width: 100%;
+    }
+    .sexo-edad-row {
+      gap: 180px;
+      margin-bottom: 0;
+    }
+    .campo-sexo, .campo-edad {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .campo-edad {
+      margin-left: 100px;
+    }
+    .cuadro-label {
+      font-weight: bold;
+      font-size: 13px;
+      margin-right: 4px;
+      margin-left: 0;
+    }
+    .mini-campo-inline {
+      width: 110px;
+      min-width: 65px;
+      font-size: 14px;
+      padding: 2px 6px;
+      border: 1.2px solid #999;
+      border-radius: 2px;
+      background: #fff;
+    }
+    .cuadro-area-label {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 1px;
+      margin-left: 0;
+    }
+    .cuadro-textarea {
+      font-size: 13px;
+      border: 1.2px solid #999;
+      border-radius: 2px;
+      background: #fff;
+      padding: 3px 8px;
+      min-height: 25px;
+      resize: vertical;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .cuadro-area-pequeno { min-height: 50px; max-height: 70px; }
+    .cuadro-area-medio { min-height: 30px; max-height: 38px; }
+    .cuadro-area-intermedio { min-height: 82px; max-height: 105px; }
+    .cuadro-area-radiologico { min-height: 46px; max-height: 58px; }
+    .cuadro-area-grande { min-height: 126px; max-height: 152px; }
+    .estado-cons-label {
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 2px;
+      margin-right: 7px;
+      margin-left: 0;
+    }
+    .estado-cons-input {
+      width: 100%;
+      min-width: 120px;
+      font-size: 14px;
+      padding: 2px 6px;
+      border: 1.2px solid #999;
+      border-radius: 2px;
+      background: #fff;
+      margin-left: 0;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      box-sizing: border-box;
+    }
+    .examen-fisico-header-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .examen-fisico-cc {
+      font-weight: normal;
+      font-size: 13px;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .examen-fisico-cc span:first-child {
+      font-weight: normal;
+      margin-right: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-wrap">
+    <div class="header">
+      CENTRO DE RECUPERACIÓN DE FAUNA "LA GRANJA"
+    </div>
+    <!-- REG. ENTRADA + DATOS EN CAJA -->
+    <div class="main-row">
+      <div class="reg-entrada-box">
+        <div class="reg-entrada-label">REG. ENTRADA</div>
+        <input class="reg-entrada-input" type="text" name="reg_entrada" autocomplete="off">
+        <div class="fecha-label">Fecha de entrada:</div>
+        <input class="fecha-input" type="date" name="fecha_entrada" autocomplete="off" placeholder=" ">
+        <input class="fecha-manual" type="text" name="fecha_entrada_manual" maxlength="10" placeholder="dd/mm/aaaa" autocomplete="off">
+        <div class="fecha-label" style="margin-top:10px;">Fecha Necropsia:</div>
+        <input class="fecha-input" type="date" name="fecha_necropsia" autocomplete="off" placeholder=" ">
+        <input class="fecha-manual" type="text" name="fecha_necropsia_manual" maxlength="10" placeholder="dd/mm/aaaa" autocomplete="off">
+      </div>
+      <div class="datos-caja">
+        <table class="datos-tabla">
+          <tr>
+            <td class="datos-label">ESPECIE:</td>
+            <td><input class="datos-input" type="text" name="especie"></td>
+          </tr>
+          <tr>
+            <td class="datos-label">MUNICIPIO DE LOCALIZACIÓN:</td>
+            <td><input class="datos-input" type="text" name="municipio"></td>
+          </tr>
+          <tr>
+            <td class="datos-label">COORDENADAS:</td>
+            <td><input class="datos-input" type="text" name="coord_utm"></td>
+          </tr>
+          <tr class="apoyo-elec-row">
+            <td class="datos-label apoyo-elec-td" style="min-width:74px;">
+              <span class="apoyo-elec-label-wrap">
+                APOYO ELEC.:<input class="apoyo-elec-input" type="text" name="apoyo_elec">
+              </span>
+            </td>
+            <td>
+              <div class="apoyo-elec-km-ctra-flex">
+                <span class="extra-label">Km CTRA:</span>
+                <input class="extra-input" type="text" name="km_ctra">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="datos-label">ANILLAS:</td>
+            <td><input class="datos-input" type="text" name="anillas"></td>
+          </tr>
+          <tr>
+            <td class="datos-label">CAUSA ENTRADA:</td>
+            <td><input class="datos-input" type="text" name="causa_entrada"></td>
+          </tr>
+          <tr>
+            <td class="datos-label">REMITENTE:</td>
+            <td><input class="datos-input" type="text" name="remitente"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXAMEN POST MORTEM SECTIONS -->
+    <div class="historia-titulo-row">
+      <div class="historia-titulo-center-wrap">
+        <span class="historia-titulo">EXAMEN POST MORTEM</span>
+      </div>
+      <div class="historia-cajas">
+        <span class="historia-caja-mano"></span>
+        <span class="historia-caja-mano"></span>
+      </div>
+    </div>
+    <div class="cuadro-clinica">
+      <!-- SEXO / EDAD -->
+      <div class="cuadro-bloque">
+        <div class="cuadro-linea sexo-edad-row" style="border-bottom:none;">
+          <div class="campo-sexo">
+            <span class="cuadro-label">SEXO</span>
+            <input class="mini-campo-inline" type="text" name="sexo">
+          </div>
+          <div class="campo-edad">
+            <span class="cuadro-label">EDAD</span>
+            <input class="mini-campo-inline" type="text" name="edad">
+          </div>
+        </div>
+      </div>
+      <!-- OBSERVACIONES -->
+      <div class="cuadro-bloque">
+        <span class="cuadro-area-label">OBSERVACIONES:</span>
+        <textarea class="cuadro-textarea cuadro-area-pequeno" name="observaciones"></textarea>
+      </div>
+      <!-- ESTADO DE CONSERVACIÓN -->
+      <div class="cuadro-bloque">
+        <span class="estado-cons-label">ESTADO DE CONSERVACIÓN</span>
+        <input class="estado-cons-input" type="text" name="estado_conservacion">
+      </div>
+      <!-- EXAMEN FÍSICO EXTERNO -->
+      <div class="cuadro-bloque" style="padding-bottom:10px;">
+        <div class="examen-fisico-header-row">
+          <span class="cuadro-area-label">EXAMEN FÍSICO EXTERNO:</span>
+          <div class="examen-fisico-cc">
+            <span>CC:</span>
+            <span>0</span>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+          </div>
+        </div>
+        <textarea class="cuadro-textarea cuadro-area-grande" style="height:152px;" name="examen_fisico"></textarea>
+      </div>
+      <!-- EXAMEN RADIOLOGICO -->
+      <div class="cuadro-bloque">
+        <span class="cuadro-area-label">EXAMEN RADIOLÓGICO:</span>
+        <textarea class="cuadro-textarea cuadro-area-radiologico" style="height:80px;" name="examen_radiologico"></textarea>
+      </div>
+      <!-- EXAMEN FÍSICO INTERNO -->
+      <div class="cuadro-bloque">
+        <span class="cuadro-area-label">EXAMEN FÍSICO INTERNO:</span>
+        <textarea class="cuadro-textarea cuadro-area-intermedio" style="height:105px;" name="examen_fisico_interno"></textarea>
+      </div>
+      <!-- DIAGNÓSTICO -->
+      <div class="cuadro-bloque" style="border-bottom:none;">
+        <span class="cuadro-area-label">DIAGNÓSTICO:</span>
+        <textarea class="cuadro-textarea cuadro-area-medio" style="height:30px;" name="diagnostico"></textarea>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
