@@ -401,17 +401,24 @@
       margin-right: 2px;
     }
 
-    /* 🔥 IMPRESIÓN: Ocultar bordes de campos editables */
+    /* 🔥 IMPRESIÓN: Ocultar bordes de campos editables, EXCEPTO número de entrada */
     @media print {
       .fecha-manual::placeholder {
         color: transparent !important;
       }
+      /* Eliminar bordes en la mayoría de campos */
       input, textarea {
         border: none !important;
         background: none !important;
         color: #000 !important;
         box-shadow: none !important;
       }
+      /* PRESERVAR el estilo del número de entrada */
+      .reg-entrada-input {
+        border: 2px solid #333 !important;
+        background: #f5f5f5 !important;
+      }
+      /* Asegurar que otros campos no muestren bordes */
       .datos-input, .mini-campo-inline, .estado-cons-input {
         border: none !important;
       }
