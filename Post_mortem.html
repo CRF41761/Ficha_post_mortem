@@ -200,6 +200,31 @@
       font-weight: normal;
     }
 
+    /* 🔥 Estilo base para inputs en la sección de datos generales */
+    .datos-input {
+        width: calc(100% - 5px) !important;
+        border: none;
+        border-bottom: 1px solid #999;
+        font-size: 13px;
+        background: transparent;
+        padding-left: 5px;
+        margin-bottom: 0px;
+        color: #222;
+        height: 21px;
+        box-sizing: border-box;
+        font-weight: normal;
+    }
+
+    /* 🔥 ESPECIE: Azul, negrita y mayúsculas */
+    .datos-tabla tr:nth-child(1) .datos-label,
+    .datos-tabla tr:nth-child(1) .datos-input {
+        color: blue !important;
+        font-weight: bold !important;
+    }
+    .datos-tabla tr:nth-child(1) .datos-input {
+        text-transform: uppercase;
+    }
+
     /* ---------- POST MORTEM SECTION ---------- */
     .historia-titulo-row {
       display: flex;
@@ -375,11 +400,25 @@
       font-weight: normal;
       margin-right: 2px;
     }
-      @media print {
-    .fecha-manual::placeholder {
-      color: transparent !important;
+
+    /* 🔥 IMPRESIÓN: Ocultar bordes de campos editables */
+    @media print {
+      .fecha-manual::placeholder {
+        color: transparent !important;
+      }
+      input, textarea {
+        border: none !important;
+        background: none !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      .datos-input, .mini-campo-inline, .estado-cons-input {
+        border: none !important;
+      }
+      .cuadro-textarea {
+        border: none !important;
+      }
     }
-  }
   </style>
 </head>
 <body>
@@ -512,7 +551,6 @@
   (function() {
     const params = new URLSearchParams(window.location.search);
     params.forEach((value, key) => {
-      // Buscar tanto <input> como <textarea> que coincidan por name
       const el = document.querySelector(`[name="${key}"]`);
       if (el) el.value = decodeURIComponent(value.replace(/\+/g, " "));
     });
