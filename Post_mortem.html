@@ -216,11 +216,17 @@
         box-sizing: border-box;
         font-weight: normal;
     }
-    .datos-tabla tr:nth-child(1) .datos-label,
-    .datos-tabla tr:nth-child(1) .datos-input {
-        color: black !important;     /* ✅ CAMBIADO A NEGRO */
-        font-weight: bold !important;
-    }
+    /* ✅ DESPUÉS: Etiqueta NEGRA, campo AZUL */
+.datos-tabla tr:nth-child(1) .datos-label {
+    color: black !important;      /* Etiqueta "ESPECIE:" en negro */
+    font-weight: bold !important;
+}
+
+.datos-tabla tr:nth-child(1) .datos-input {
+    color: blue !important;       /* Campo relleno en azul */
+    font-weight: bold !important;
+    text-transform: uppercase;
+}
     .datos-tabla tr:nth-child(1) .datos-input {
         text-transform: uppercase;
     }
