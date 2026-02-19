@@ -22,7 +22,7 @@
     }
     .a4-wrap {
       max-width: 185mm;
-      min-height: 260mm;  /* ✅ REDUCIDO de 275mm a 260mm */
+      min-height: 260mm;
       margin: 0 auto;
       box-sizing: border-box;
       padding: 0;
@@ -216,18 +216,14 @@
         box-sizing: border-box;
         font-weight: normal;
     }
-    /* ✅ DESPUÉS: Etiqueta NEGRA, campo AZUL */
-.datos-tabla tr:nth-child(1) .datos-label {
-    color: black !important;      /* Etiqueta "ESPECIE:" en negro */
-    font-weight: bold !important;
-}
-
-.datos-tabla tr:nth-child(1) .datos-input {
-    color: blue !important;       /* Campo relleno en azul */
-    font-weight: bold !important;
-    text-transform: uppercase;
-}
+    /* ✅ ESPECIE: Etiqueta NEGRA, campo AZUL */
+    .datos-tabla tr:nth-child(1) .datos-label {
+        color: black !important;
+        font-weight: bold !important;
+    }
     .datos-tabla tr:nth-child(1) .datos-input {
+        color: blue !important;
+        font-weight: bold !important;
         text-transform: uppercase;
     }
     .historia-titulo-row {
@@ -368,8 +364,8 @@
     
     /* ✅ OBSERVACIONES: Más espacio pero sin desbordar */
     .cuadro-area-observaciones-pm { 
-      min-height: 100px;   /* ✅ REDUCIDO de 120px a 100px */
-      max-height: 150px;   /* ✅ REDUCIDO de 180px a 150px */
+      min-height: 100px;
+      max-height: 150px;
     }
     
     .estado-cons-label {
@@ -457,10 +453,15 @@
       .btn-imprimir {
         display: none !important;
       }
-      /* ✅ ELIMINADO: min-height: 100vh que causaba página extra */
       .a4-wrap {
         min-height: auto !important;
         height: auto !important;
+      }
+      /* ✅ EXCEPTO el campo ESPECIE que mantiene el azul */
+      .datos-tabla tr:nth-child(1) .datos-input {
+        color: blue !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
     }
   </style>
