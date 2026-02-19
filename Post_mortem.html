@@ -69,7 +69,7 @@
       border-radius: 4px;
       width: 122px;
       height: 50px;
-      font-size: 15px;
+      font-size: 1.23em;
       font-weight: bold;
       text-align: center;
       margin-bottom: 8px;
@@ -78,6 +78,7 @@
       box-sizing: border-box;
       letter-spacing: 1px;
       transition: none;
+      color: blue !important;
     }
     .fecha-label {
       font-size: 12px;
@@ -199,8 +200,6 @@
       vertical-align: middle;
       font-weight: normal;
     }
-
-    /* 🔥 Estilo base para inputs en la sección de datos generales */
     .datos-input {
         width: calc(100% - 5px) !important;
         border: none;
@@ -214,8 +213,6 @@
         box-sizing: border-box;
         font-weight: normal;
     }
-
-    /* 🔥 ESPECIE: Azul, negrita y mayúsculas */
     .datos-tabla tr:nth-child(1) .datos-label,
     .datos-tabla tr:nth-child(1) .datos-input {
         color: blue !important;
@@ -224,8 +221,6 @@
     .datos-tabla tr:nth-child(1) .datos-input {
         text-transform: uppercase;
     }
-
-    /* ---------- POST MORTEM SECTION ---------- */
     .historia-titulo-row {
       display: flex;
       flex-direction: row;
@@ -400,8 +395,6 @@
       font-weight: normal;
       margin-right: 2px;
     }
-
-    /* ✅ BOTÓN IMPRIMIR - AÑADIDO */
     .btn-imprimir {
       position: fixed;
       top: 20px;
@@ -422,32 +415,29 @@
     .btn-imprimir:hover {
       background: #6aa8ca;
     }
-
-    /* 🔥 IMPRESIÓN: Ocultar bordes de campos editables, EXCEPTO número de entrada */
     @media print {
       .fecha-manual::placeholder {
         color: transparent !important;
       }
-      /* Eliminar bordes en la mayoría de campos */
       input, textarea {
         border: none !important;
         background: none !important;
         color: #000 !important;
         box-shadow: none !important;
       }
-      /* PRESERVAR el estilo del número de entrada */
       .reg-entrada-input {
         border: 2px solid #333 !important;
         background: #f5f5f5 !important;
+        color: blue !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
-      /* Asegurar que otros campos no muestren bordes */
       .datos-input, .mini-campo-inline, .estado-cons-input {
         border: none !important;
       }
       .cuadro-textarea {
         border: none !important;
       }
-      /* ✅ Ocultar botón de imprimir */
       .btn-imprimir {
         display: none !important;
       }
@@ -455,14 +445,12 @@
   </style>
 </head>
 <body>
-  <!-- ✅ BOTÓN IMPRIMIR - AÑADIDO -->
   <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
   
   <div class="a4-wrap">
     <div class="header">
       CENTRO DE RECUPERACIÓN DE FAUNA "LA GRANJA"
     </div>
-    <!-- REG. ENTRADA + DATOS EN CAJA -->
     <div class="main-row">
       <div class="reg-entrada-box">
         <div class="reg-entrada-label">REG. ENTRADA</div>
@@ -516,8 +504,6 @@
         </table>
       </div>
     </div>
-
-    <!-- EXAMEN POST MORTEM SECTIONS -->
     <div class="historia-titulo-row">
       <div class="historia-titulo-center-wrap">
         <span class="historia-titulo">EXAMEN POST MORTEM</span>
@@ -528,7 +514,6 @@
       </div>
     </div>
     <div class="cuadro-clinica">
-      <!-- SEXO / EDAD -->
       <div class="cuadro-bloque">
         <div class="cuadro-linea sexo-edad-row" style="border-bottom:none;">
           <div class="campo-sexo">
@@ -541,17 +526,14 @@
           </div>
         </div>
       </div>
-      <!-- OBSERVACIONES -->
       <div class="cuadro-bloque">
         <span class="cuadro-area-label">OBSERVACIONES:</span>
         <textarea class="cuadro-textarea cuadro-area-pequeno" name="observaciones"></textarea>
       </div>
-      <!-- ESTADO DE CONSERVACIÓN -->
       <div class="cuadro-bloque">
         <span class="estado-cons-label">ESTADO DE CONSERVACIÓN</span>
         <input class="estado-cons-input" type="text" name="estado_conservacion">
       </div>
-      <!-- EXAMEN FÍSICO EXTERNO -->
       <div class="cuadro-bloque" style="padding-bottom:10px;">
         <div class="examen-fisico-header-row">
           <span class="cuadro-area-label">EXAMEN FÍSICO EXTERNO:</span>
@@ -565,24 +547,20 @@
         </div>
         <textarea class="cuadro-textarea cuadro-area-grande" style="height:152px;" name="examen_fisico"></textarea>
       </div>
-      <!-- EXAMEN RADIOLOGICO -->
       <div class="cuadro-bloque">
         <span class="cuadro-area-label">EXAMEN RADIOLÓGICO:</span>
         <textarea class="cuadro-textarea cuadro-area-radiologico" style="height:80px;" name="examen_radiologico"></textarea>
       </div>
-      <!-- EXAMEN FÍSICO INTERNO -->
       <div class="cuadro-bloque">
         <span class="cuadro-area-label">EXAMEN FÍSICO INTERNO:</span>
         <textarea class="cuadro-textarea cuadro-area-intermedio" style="height:105px;" name="examen_fisico_interno"></textarea>
       </div>
-      <!-- DIAGNÓSTICO -->
       <div class="cuadro-bloque" style="border-bottom:none;">
         <span class="cuadro-area-label">DIAGNÓSTICO:</span>
         <textarea class="cuadro-textarea cuadro-area-medio" style="height:30px;" name="diagnostico"></textarea>
       </div>
     </div>
   </div>
-  <!-- SCRIPT PARA AUTORRELLENO DESDE URL -->
   <script>
   (function() {
     const params = new URLSearchParams(window.location.search);
@@ -592,7 +570,6 @@
     });
   })();
   </script>
-  <!-- ✅ BLOQUEAR CAMPOS: Solo lectura (no editable) -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('input, textarea').forEach(el => {
