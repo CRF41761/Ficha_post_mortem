@@ -563,5 +563,13 @@
     });
   })();
   </script>
+    <!-- ✅ BLOQUEAR CAMPOS: Solo lectura (no editable) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.setAttribute('readonly', true);
+    });
+  });
+  </script>
 </body>
 </html>
