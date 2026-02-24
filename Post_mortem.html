@@ -599,5 +599,20 @@
     });
   });
   </script>
+  <!-- ✅ INDICADOR DE IMPRESIÓN (Visual hasta cerrar pestaña) -->
+<script>
+  const btnImprimir = document.querySelector('.btn-imprimir');
+  
+  if (btnImprimir) {
+    btnImprimir.addEventListener('click', function() {
+      // ✅ Cambiar a VERDE permanentemente (hasta recargar/cerrar)
+      this.style.background = '#22c55e';
+      this.innerHTML = '✅ ¡Impresa!';
+      
+      // ✅ NO hay setTimeout → Se queda verde hasta que cierres la pestaña
+      // ✅ NO hay sessionStorage → Si recargas o vuelves a abrir, sale azul
+    });
+  }
+</script>
 </body>
 </html>
